@@ -1,0 +1,11 @@
+#Postgresql configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://dpg-d55ru8khg0os73aa9f1g-a.singapore-postgres.render.com/moneymanager_84bx
+    username: moneymanager_84bx_user
+    password: EV2Ukwv6Rn9i2haxi69iugiOKug87htD
+
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect

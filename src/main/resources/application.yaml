@@ -1,0 +1,52 @@
+#MySql Configuration
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/moneymanager
+    username: root
+    password: Priyanshi@2728
+
+  #JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  #Email configuration
+  mail:
+    host: smtp-relay.brevo.com
+    port: 587
+    username: ${BREVO_USERNAME}
+    password: ${BREVO_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+    protocol: smtp
+  profiles:
+    active: prod
+
+money:
+  manager:
+    frontend:
+      url: ${MONEY_MANAGER_FRONTEND_URL}
+
+app:
+  activation:
+    url: ${MONEY_MANAGER_BACKEND_URL}
+
+
+
+
+
+server:
+  servlet:
+    context-path: /api/v1.0
+logging:
+  include-application-group:
+
