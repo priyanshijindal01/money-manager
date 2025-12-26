@@ -16,9 +16,9 @@ spring:
 
   #Email configuration
   mail:
-    host: smtp-relay.brevo.com
-    port: 587
-    username: ${BREVO_USERNAME}
+#    host: smtp-relay.brevo.com
+#    port: 587
+#    username: ${BREVO_USERNAME}
     password: ${BREVO_PASSWORD}
     properties:
       mail:
