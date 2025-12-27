@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Base64;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -52,5 +54,58 @@ public class EmailService {
                 request,
                 String.class
         );
+    }
+
+    public void sendEmailWithAttachment(
+            String toEmail,
+            String subject,
+            String htmlContent,
+            byte[] attachment,
+            String filename
+    ) {
+        HttpHeaders headers = buildHeaders();
+        String base64Attachment = Base64.getEncoder().encodeToString(attachment);
+        String body = String.format("""
+                                            {
+                                              "sender": {
+                                                "name": "Money Manager",
+                                                "email": "priyanshijindal2123@gmail.com"
+                                              },
+                                              "to": [
+                                                { "email": "%s" }
+                                              ],
+                                              "subject": "%s",
+                                              "htmlContent": "%s",
+                                              "attachment": [
+                                                {
+                                                  "content": "%s",
+                                                  "name": "%s"
+                                                }
+                                              ]
+                                            }
+                                            """,
+                                    toEmail,
+                                    subject,
+                                    escapeJson(htmlContent),
+                                    base64Attachment,
+                                    filename
+        );
+
+        restTemplate.postForEntity(
+                BREVO_URL,
+                new HttpEntity<>(body, headers),
+                String.class
+        );
+    }
+
+    private HttpHeaders buildHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("api-key", apiKey);
+        return headers;
+    }
+
+    private String escapeJson(String value) {
+        return value.replace("\"", "\\\"");
     }
 }
